@@ -28,9 +28,6 @@ export const App = () => {
     setHasTitleEror(false);
   };
 
-  const newId = Math.max(0, ...todos.map(t => t.id)) + 1;
-  const cleanTitle = title.trim();
-
   const handleUserChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setUserId(+event.target.value);
     setHasChoseEror(false);
@@ -43,10 +40,14 @@ export const App = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    setHasTitleEror(!title);
-    setHasChoseEror(!userId);
+    const newId = Math.max(0, ...todos.map(todo => todo.id)) + 1;
 
-    if (!title.trim() || !userId) {
+    const cleanTitle = title.trim();
+
+    setHasTitleEror(cleanTitle === '');
+    setHasChoseEror(userId === 0);
+
+    if (cleanTitle === '' || userId === 0) {
       return;
     }
 
